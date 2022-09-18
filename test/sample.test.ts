@@ -1,23 +1,23 @@
 import {sum, sumAsync, throwError, throwErrorAsync} from '../src/sample';
 
 describe('同期関数のテスト', () => {
-  it('戻り値のチェック', () => {
+  it('戻り値のチェック(数値)', () => {
     expect(sum(1, 2)).toEqual(3);
   })
 
-  it('文字列のチェック', () => {
+  it('戻り値のチェック(文字列)', () => {
     expect('hello world').toEqual('hello world');
     expect('hello world').toContain('hello');
     expect('hello world').toMatch(/hello/);
   })
 
-  it('配列のチェック', () => {
+  it('戻り値のチェック(配列)', () => {
     expect([1, 2, 3]).toHaveLength(3);
     expect([1, 2, 3]).toEqual([1, 2, 3]);
     expect([1, 2, 3]).toContain(1);
   })
 
-  it('オブジェクトのチェック', () => {
+  it('戻り値のチェック(オブジェクト)', () => {
     expect({foo: 'foo', bar: 'bar'}).toEqual({foo: 'foo', bar: 'bar'});
     expect({foo: 'foo', bar: 'bar'}).toMatchObject({foo: 'foo'});
     expect({foo: 'foo', bar: 'bar'}).toMatchObject({foo: expect.any(String)});
