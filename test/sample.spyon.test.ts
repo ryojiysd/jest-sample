@@ -1,15 +1,20 @@
-import { sum, SampleClass } from '../src/sample';
+import { sum, toLower, SampleClass } from '../src/sample';
 import * as sample from '../src/sample'; // ファイル直下でexportされている関数に spyOn を行うために必要
 import os from 'os';
 
 describe('ファイル直下で export されている関数に spyOn', () => {
+  let toLowerMock: jest.Mock;
+
   beforeEach(() => {
     jest.spyOn(sample, 'sum');
+    // jest.spyOn() はモックを返すので as jest.Mock を使うか let を使うかのトレードオフ
+    toLowerMock = jest.spyOn(sample, 'toLower') as jest.Mock;
   })
 
   afterEach(() => {
     // テストが終わったら元の実装に戻す
     (sample.sum as jest.Mock).mockRestore();
+    toLowerMock.mockRestore();
   })
 
   it('sum がモック化されていること', () => {
@@ -17,6 +22,12 @@ describe('ファイル直下で export されている関数に spyOn', () => {
     const ret = sum(1, 2);
     expect(ret).toBe(0);
     expect(sample.sum).toHaveBeenCalledWith(1, 2);
+  })
+
+  it('toBeCalledWithのチェックに複数の条件を並べたい場合', () => {
+    toLowerMock.mockReturnValue('');
+    toLower('HELLO');
+    expect(toLowerMock).toBeCalledWith(expect.stringContaining('HELLO') && expect.stringMatching('HELLO'));
   })
 })
 

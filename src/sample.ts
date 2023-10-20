@@ -1,3 +1,4 @@
+export const toLower = (s: string): string => s.toLowerCase();
 export const sum = (a: number, b: number): number => a + b;
 export const sumAsync = async (a: number, b: number): Promise<number> => a + b;
 
